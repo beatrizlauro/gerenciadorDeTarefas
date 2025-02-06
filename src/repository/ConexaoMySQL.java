@@ -16,7 +16,7 @@ import model.Tarefa;
  * @author User
  */
 public class ConexaoMySQL {
-    private Conexao conexao = null;
+    public Conexao conexao = null;
     public static Connection connection = null;
     
     public ConexaoMySQL(Conexao conexao){
@@ -54,14 +54,15 @@ public class ConexaoMySQL {
     }
     
     public boolean insert(Tarefa tarefa){
+        String status = tarefa.isConcluida() ? "Concluída" : "Pendente";
+        
         PreparedStatement stmt = null;
         try {
-            String comando = "INSERT INTO nova_tarefa(nomeTarefa, descricao, concluida, dataCriacao) " +
-                             "VALUES(?, ?, ?, ?)";
+            String comando = "INSERT INTO nova_tarefa (id, nomeTarefa, descricao, status, dataCriacao) VALUES (?, ?, ?, ?, ?)";
             stmt = connection.prepareStatement(comando);
             stmt.setString(1, tarefa.getNomeTarefa());
             stmt.setString(2, tarefa.getDescricao());
-            stmt.setBoolean(3, tarefa.isConcluida()); // Certo para valores booleanos
+            stmt.setString(3, status); // Certo para valores booleanos
             stmt.setDate(4, Date.valueOf(tarefa.getDataCriacao())); // Converte LocalDate para java.sql.Date
 
             stmt.executeUpdate();

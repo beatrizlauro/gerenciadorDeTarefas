@@ -1,3 +1,4 @@
+
 package model;
 
 import java.time.LocalDate;
@@ -16,6 +17,10 @@ public class Tarefa {
         this.descricao = descricao;
         this.concluida = concluida;
         this.dataCriacao = dataCriacao;
+    }
+    
+    public Tarefa(){
+        
     }
 
     public int getId() {

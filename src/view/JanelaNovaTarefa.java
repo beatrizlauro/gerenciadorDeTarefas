@@ -1,5 +1,9 @@
 package view;
 
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import model.Tarefa;
 import repository.TarefaRepository;
 import javax.swing.JOptionPane;
@@ -7,6 +11,10 @@ import javax.swing.JOptionPane;
 public class JanelaNovaTarefa extends javax.swing.JFrame {
 
     private static JanelaNovaTarefa instancia;
+
+    static void setSelected(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     private JanelaPrincipal janelaPrincipal;
 
     /**
@@ -40,7 +48,6 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
         taskName3 = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextField();
         txtNomeDaTarefa = new javax.swing.JTextField();
-        txtDataDeCriacao = new javax.swing.JTextField();
         btnRetroceder = new javax.swing.JButton();
         btnAvancar = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
@@ -48,6 +55,7 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
         checkBoxConcluido = new javax.swing.JCheckBox();
+        dateChooserDataCriacao = new com.toedter.calendar.JDateChooser();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -121,10 +129,10 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
                                 .addComponent(checkBoxConcluido))
                             .addGroup(newTaskWindowLayout.createSequentialGroup()
                                 .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(newTaskWindowLayout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newTaskWindowLayout.createSequentialGroup()
                                         .addComponent(taskName2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtDataDeCriacao))
+                                        .addGap(12, 12, 12)
+                                        .addComponent(dateChooserDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newTaskWindowLayout.createSequentialGroup()
                                         .addComponent(taskName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -162,11 +170,11 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
                 .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkBoxConcluido)
                     .addComponent(taskName3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(taskName2)
-                    .addComponent(txtDataDeCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooserDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIrParaMenu)
@@ -203,22 +211,27 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
     }//GEN-LAST:event_checkBoxConcluidoActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-       int id = Integer.parseInt(txtId.getText());
+        int id = Integer.parseInt(txtId.getText());
+       
         Tarefa tarefa = new Tarefa();
+        
         tarefa.setNomeTarefa(txtNomeDaTarefa.getText());
         tarefa.setDescricao(txtDescricao.getText());
-        tarefa.setConcluida(checkBoxConcluido.getText());
-        tarefa.setDataCriacao(txtDataDeCriacao.getText());
+        tarefa.setConcluida(checkBoxConcluido.isSelected());;
+        Date dataSelecionada = dateChooserDataCriacao.getDate();
+        LocalDate dataCriacao = dataSelecionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        tarefa.setDataCriacao(dataCriacao);
         tarefa.setId(id);
         String mensagem;
             
         TarefaRepository tarefaRepository = new TarefaRepository();
         boolean retornoBanco = false;
         if (Integer.parseInt(txtId.getText()) == 0) {
-            retornoBanco =  tarefaRepository.inserir(janelaPrincipal.conexaoMySQL.connection, pessoa);
+
+            retornoBanco =  tarefaRepository.inserir((Connection) janelaPrincipal.conexaoMySQL.conexao, tarefa);
             mensagem = "Tarefa inserido com sucesso!";
         } else {
-          retornoBanco =  tarefaRepository.atualizar(janelaPrincipal.conexaoMySQL.connection, pessoa);
+          retornoBanco =  tarefaRepository.atualizar((Connection) janelaPrincipal.conexaoMySQL.conexao, tarefa);
           mensagem = "Tarefa atualizada com sucesso!";
         } 
 
@@ -233,13 +246,13 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
-    private void limparJanela(){
-        txtNomeDaTarefa.setText("");
-        txtDescricao.setText("");
-        checkBoxConcluido.setText("");
-        txtDataDeCriacao.setText("");
-        txtNomeDaTarefa.requestFocus();
-    }
+private void limparJanela() {
+    txtNomeDaTarefa.setText("");
+    txtDescricao.setText("");
+    checkBoxConcluido.setSelected(false); // Desmarca a checkbox
+    dateChooserDataCriacao.setDate(null);
+    txtNomeDaTarefa.requestFocus(); // Move o cursor para o campo de nome da tarefa
+}
     
     private void fecharJanela(){
         instancia = null;
@@ -259,6 +272,7 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
     private javax.swing.JButton btnIrParaMenu;
     private javax.swing.JButton btnRetroceder;
     private javax.swing.JCheckBox checkBoxConcluido;
+    private com.toedter.calendar.JDateChooser dateChooserDataCriacao;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -268,7 +282,6 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
     private javax.swing.JLabel taskName1;
     private javax.swing.JLabel taskName2;
     private javax.swing.JLabel taskName3;
-    private javax.swing.JTextField txtDataDeCriacao;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNomeDaTarefa;
