@@ -58,7 +58,7 @@ public class ConexaoMySQL {
         
         PreparedStatement stmt = null;
         try {
-            String comando = "INSERT INTO nova_tarefa (id, nomeTarefa, descricao, status, dataCriacao) VALUES (?, ?, ?, ?, ?)";
+            String comando = "INSERT INTO nova_tarefa (nomeTarefa, descricao, status, dataCriacao) VALUES (?, ?, ?, ?)";
             stmt = connection.prepareStatement(comando);
             stmt.setString(1, tarefa.getNomeTarefa());
             stmt.setString(2, tarefa.getDescricao());

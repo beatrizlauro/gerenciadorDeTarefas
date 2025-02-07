@@ -25,7 +25,7 @@ public class TarefaRepository implements Crud<Tarefa>{
         
         PreparedStatement stmt = null;
         try{
-            String comando = "INSERT INTO nova_tarefa (id, nomeTarefa, descricao, status, dataCriacao) VALUES (?, ?, ?, ?, ?)";
+            String comando = "INSERT INTO nova_tarefa (nomeTarefa, descricao, status, dataCriacao) VALUES (?, ?, ?, ?)";
             stmt = connection.prepareStatement(comando);
             stmt.setString(1, tarefa.getNomeTarefa());
             stmt.setString(2, tarefa.getDescricao());
@@ -39,7 +39,7 @@ public class TarefaRepository implements Crud<Tarefa>{
             JOptionPane.showMessageDialog(
                     null,
                     "Erro ao inserir tarefa: " + ex.getMessage(),
-                    "Erro ao inserir",
+                    " Erro ao inserir",
                     JOptionPane.ERROR_MESSAGE
             );
         }
@@ -53,9 +53,9 @@ public class TarefaRepository implements Crud<Tarefa>{
         
         PreparedStatement stmt = null;
         try{
-            String comando = "UPDATE nova_tarefa SET" +
-                    "nomeTarefa = ?, descricao = ?, status = ?, dataCriacao = ?" +
-                    "WHERE id = ?";
+            String comando = "UPDATE nova_tarefa SET " +
+                    "nomeTarefa = ?, descricao = ?, status = ?, dataCriacao = ? " +
+                    " WHERE id = ?";
             stmt = connection.prepareStatement(comando);
             stmt.setString(1, tarefa.getNomeTarefa());
             stmt.setString(2, tarefa.getDescricao());
@@ -70,7 +70,7 @@ public class TarefaRepository implements Crud<Tarefa>{
             JOptionPane.showMessageDialog(
                     null,
                     "Erro ao atualizar tarefa: " + ex.getMessage(),
-                    "Erro ao atualizar",
+                    " Erro ao atualizar",
                     JOptionPane.ERROR_MESSAGE
             );
             System.out.println(ex.getMessage());
@@ -84,7 +84,7 @@ public class TarefaRepository implements Crud<Tarefa>{
         PreparedStatement stmt = null;
         try{
             String comando = "DELETE FROM nova_tarefa " +
-                            "WHERE id = ?";
+                            " WHERE id = ?";
             stmt = connection.prepareStatement(comando);
             stmt.setInt(1, tarefa.getId());
             
@@ -96,7 +96,7 @@ public class TarefaRepository implements Crud<Tarefa>{
             JOptionPane.showMessageDialog(
                     null,
                     "Erro ao excluir tarefa: " + ex.getMessage(),
-                    "Erro ao excluir",
+                    " Erro ao excluir",
                     JOptionPane.ERROR_MESSAGE
             );
             System.out.println(ex.getMessage());
@@ -109,7 +109,7 @@ public class TarefaRepository implements Crud<Tarefa>{
         try {
             Tarefa tarefa = new Tarefa();
             PreparedStatement  stmt = null;
-            String comando = "SELECT * FROM nova_tarefa WHERE id" + 
+            String comando = "SELECT * FROM nova_tarefa WHERE id " + 
                     operador + " ? ";
             
             if (operador.equals("<"))
@@ -125,7 +125,7 @@ public class TarefaRepository implements Crud<Tarefa>{
                     
                     tarefa.setId(Integer.parseInt(res.getString("id")));
                     tarefa.setNomeTarefa(res.getString("nomeTarefa"));
-                    tarefa.setDescricao(res.getString("endereco"));
+                    tarefa.setDescricao(res.getString("descricao"));
                     tarefa.setConcluida(res.getBoolean("status"));
                     tarefa.setDataCriacao(res.getDate("dataCriacao").toLocalDate());
                     

@@ -8,13 +8,9 @@ import model.Tarefa;
 import repository.TarefaRepository;
 import javax.swing.JOptionPane;
 
-public class JanelaNovaTarefa extends javax.swing.JFrame {
+public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
 
     private static JanelaNovaTarefa instancia;
-
-    static void setSelected(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     private JanelaPrincipal janelaPrincipal;
 
     /**
@@ -41,21 +37,20 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        newTaskWindow = new javax.swing.JInternalFrame();
         taskName = new javax.swing.JLabel();
-        taskName1 = new javax.swing.JLabel();
-        taskName2 = new javax.swing.JLabel();
-        taskName3 = new javax.swing.JLabel();
-        txtDescricao = new javax.swing.JTextField();
         txtNomeDaTarefa = new javax.swing.JTextField();
         btnRetroceder = new javax.swing.JButton();
+        taskName1 = new javax.swing.JLabel();
+        txtDescricao = new javax.swing.JTextField();
         btnAvancar = new javax.swing.JButton();
-        txtId = new javax.swing.JTextField();
-        btnIrParaMenu = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
-        btnGravar = new javax.swing.JButton();
+        taskName3 = new javax.swing.JLabel();
         checkBoxConcluido = new javax.swing.JCheckBox();
+        taskName2 = new javax.swing.JLabel();
         dateChooserDataCriacao = new com.toedter.calendar.JDateChooser();
+        txtId = new javax.swing.JTextField();
+        btnGravar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnIrParaMenu = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -67,34 +62,28 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
 
         setTitle("Nova Tarefa");
 
-        newTaskWindow.setTitle("Nova Tarefa");
-        newTaskWindow.setVisible(true);
-
         taskName.setText("Nome da Tarefa:");
 
-        taskName1.setText("Descrição:");
-
-        taskName2.setText("Data de Criação:");
-
-        taskName3.setText("Concluída:");
-
-        btnRetroceder.setText("«");
+        btnRetroceder.setText("⏪");
         btnRetroceder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRetrocederActionPerformed(evt);
             }
         });
 
-        btnAvancar.setText("»");
+        taskName1.setText("Descrição:");
 
-        btnIrParaMenu.setText("Menu");
-        btnIrParaMenu.addActionListener(new java.awt.event.ActionListener() {
+        btnAvancar.setText("⏩");
+
+        taskName3.setText("Concluída:");
+
+        checkBoxConcluido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIrParaMenuActionPerformed(evt);
+                checkBoxConcluidoActionPerformed(evt);
             }
         });
 
-        btnExcluir.setText("Excluir");
+        taskName2.setText("Data de Criação:");
 
         btnGravar.setText("Gravar");
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,108 +92,90 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
             }
         });
 
-        checkBoxConcluido.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluir.setText("Excluir");
+
+        btnIrParaMenu.setText("Menu");
+        btnIrParaMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkBoxConcluidoActionPerformed(evt);
+                btnIrParaMenuActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout newTaskWindowLayout = new javax.swing.GroupLayout(newTaskWindow.getContentPane());
-        newTaskWindow.getContentPane().setLayout(newTaskWindowLayout);
-        newTaskWindowLayout.setHorizontalGroup(
-            newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(newTaskWindowLayout.createSequentialGroup()
-                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newTaskWindowLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                     .addComponent(btnRetroceder, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(newTaskWindowLayout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(newTaskWindowLayout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(taskName3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(checkBoxConcluido))
-                            .addGroup(newTaskWindowLayout.createSequentialGroup()
-                                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newTaskWindowLayout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(taskName2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(12, 12, 12)
-                                        .addComponent(dateChooserDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newTaskWindowLayout.createSequentialGroup()
+                                        .addComponent(dateChooserDataCriacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(taskName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtNomeDaTarefa))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newTaskWindowLayout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(taskName1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(btnAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newTaskWindowLayout.createSequentialGroup()
+                                .addComponent(btnAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGravar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnIrParaMenu)
-                        .addGap(14, 14, 14))))
+                        .addGap(2, 2, 2)))
+                .addGap(36, 36, 36))
         );
-        newTaskWindowLayout.setVerticalGroup(
-            newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(newTaskWindowLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(taskName)
                     .addComponent(txtNomeDaTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(taskName1)
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRetroceder)
                     .addComponent(btnAvancar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkBoxConcluido)
                     .addComponent(taskName3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(taskName2)
                     .addComponent(dateChooserDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(newTaskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIrParaMenu)
                     .addComponent(btnExcluir)
                     .addComponent(btnGravar))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(newTaskWindow)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(newTaskWindow)
+                .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    
-    private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRetrocederActionPerformed
-
-    private void btnIrParaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaMenuActionPerformed
-        fecharJanela();
-    }//GEN-LAST:event_btnIrParaMenuActionPerformed
 
     private void checkBoxConcluidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxConcluidoActionPerformed
         // TODO add your handling code here:
@@ -212,9 +183,9 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         int id = Integer.parseInt(txtId.getText());
-       
+
         Tarefa tarefa = new Tarefa();
-        
+
         tarefa.setNomeTarefa(txtNomeDaTarefa.getText());
         tarefa.setDescricao(txtDescricao.getText());
         tarefa.setConcluida(checkBoxConcluido.isSelected());;
@@ -223,29 +194,38 @@ public class JanelaNovaTarefa extends javax.swing.JFrame {
         tarefa.setDataCriacao(dataCriacao);
         tarefa.setId(id);
         String mensagem;
-            
+
         TarefaRepository tarefaRepository = new TarefaRepository();
         boolean retornoBanco = false;
         if (Integer.parseInt(txtId.getText()) == 0) {
 
             retornoBanco =  tarefaRepository.inserir((Connection) janelaPrincipal.conexaoMySQL.conexao, tarefa);
-            mensagem = "Tarefa inserido com sucesso!";
+            mensagem = "Tarefa inserida com sucesso!";
         } else {
-          retornoBanco =  tarefaRepository.atualizar((Connection) janelaPrincipal.conexaoMySQL.conexao, tarefa);
-          mensagem = "Tarefa atualizada com sucesso!";
-        } 
+            retornoBanco =  tarefaRepository.atualizar((Connection) janelaPrincipal.conexaoMySQL.conexao, tarefa);
+            mensagem = "Tarefa atualizada com sucesso!";
+        }
 
         if(retornoBanco) {
             JOptionPane.showMessageDialog(
                 this,
-                    mensagem,
-                    "Tela de Cadastro",
-                    JOptionPane.INFORMATION_MESSAGE
+                mensagem,
+                "Tela de Cadastro",
+                JOptionPane.INFORMATION_MESSAGE
             );
             limparJanela();
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
+    private void btnIrParaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaMenuActionPerformed
+        fecharJanela();
+    }//GEN-LAST:event_btnIrParaMenuActionPerformed
+
+    private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRetrocederActionPerformed
+
+    
 private void limparJanela() {
     txtNomeDaTarefa.setText("");
     txtDescricao.setText("");
@@ -277,7 +257,6 @@ private void limparJanela() {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JInternalFrame newTaskWindow;
     private javax.swing.JLabel taskName;
     private javax.swing.JLabel taskName1;
     private javax.swing.JLabel taskName2;
