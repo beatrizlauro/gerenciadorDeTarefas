@@ -108,33 +108,30 @@ public class TarefaRepository implements Crud<Tarefa>{
     public Tarefa selecionar(Connection connection, String operador, int id) {
         try {
             Tarefa tarefa = new Tarefa();
-            PreparedStatement  stmt = null;
-            String comando = "SELECT * FROM nova_tarefa WHERE id " + 
-                    operador + " ? ";
-            
+            String comando = "SELECT * FROM nova_tarefa WHERE id " + operador + " ? ";
+
             if (operador.equals("<"))
                 comando += " ORDER BY id DESC";
-            
-            stmt = connection.prepareStatement(comando);
-            stmt.setInt(1,id);
-            
+            else if (operador.equals(">"))
+                comando += " ORDER BY id ASC";
+
+            PreparedStatement stmt = connection.prepareStatement(comando);
+            stmt.setInt(1, id);
             ResultSet res = stmt.executeQuery();
-            
-            if(res != null) {
-                while(res.next()){
-                    
-                    tarefa.setId(Integer.parseInt(res.getString("id")));
-                    tarefa.setNomeTarefa(res.getString("nomeTarefa"));
-                    tarefa.setDescricao(res.getString("descricao"));
-                    tarefa.setConcluida(res.getBoolean("status"));
-                    tarefa.setDataCriacao(res.getDate("dataCriacao").toLocalDate());
-                    
-                    break;
-                }
+
+            if (res != null && res.next()) {  // Se houver ao menos um registro
+                tarefa.setId(res.getInt("id"));
+                tarefa.setNomeTarefa(res.getString("nomeTarefa"));
+                tarefa.setDescricao(res.getString("descricao"));
+                String status = res.getString("status");
+                tarefa.setConcluida("Concluída".equalsIgnoreCase(status));
+                tarefa.setDataCriacao(res.getDate("dataCriacao").toLocalDate());
             }
+            stmt.close();
             return tarefa;
-            
+
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         } 
     }

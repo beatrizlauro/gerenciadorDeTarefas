@@ -30,7 +30,7 @@ public class ConexaoMySQL {
                              ":" + conexao.getPorta() +
                              "/" + conexao.getNomeBanco();
                 
-                //pegar a classe da Librarie q adicionamos:
+                // pegar a classe da Librarie q adicionamos:
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 
                 connection = DriverManager.getConnection(

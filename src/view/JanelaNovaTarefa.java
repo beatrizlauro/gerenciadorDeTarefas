@@ -7,6 +7,7 @@ import java.util.Date;
 import model.Tarefa;
 import repository.TarefaRepository;
 import javax.swing.JOptionPane;
+import repository.ConexaoMySQL;
 
 public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
 
@@ -64,7 +65,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
 
         taskName.setText("Nome da Tarefa:");
 
-        btnRetroceder.setText("⏪");
+        btnRetroceder.setText("⬅️");
         btnRetroceder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRetrocederActionPerformed(evt);
@@ -73,7 +74,12 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
 
         taskName1.setText("Descrição:");
 
-        btnAvancar.setText("⏩");
+        btnAvancar.setText("➡️");
+        btnAvancar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvancarActionPerformed(evt);
+            }
+        });
 
         taskName3.setText("Concluída:");
 
@@ -85,6 +91,8 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
 
         taskName2.setText("Data de Criação:");
 
+        txtId.setEnabled(false);
+
         btnGravar.setText("Gravar");
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +101,11 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnIrParaMenu.setText("Menu");
         btnIrParaMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -106,10 +119,13 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                    .addComponent(btnRetroceder, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnRetroceder, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -117,7 +133,8 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(taskName3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(checkBoxConcluido))
+                                .addComponent(checkBoxConcluido)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -133,7 +150,8 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(btnAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, Short.MAX_VALUE)))
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGravar)
@@ -141,8 +159,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
                         .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnIrParaMenu)
-                        .addGap(2, 2, 2)))
-                .addGap(36, 36, 36))
+                        .addGap(38, 38, 38))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,8 +172,8 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(taskName1)
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRetroceder)
-                    .addComponent(btnAvancar))
+                    .addComponent(btnRetroceder, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkBoxConcluido)
@@ -185,24 +202,32 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
         int id = Integer.parseInt(txtId.getText());
 
         Tarefa tarefa = new Tarefa();
-
         tarefa.setNomeTarefa(txtNomeDaTarefa.getText());
         tarefa.setDescricao(txtDescricao.getText());
-        tarefa.setConcluida(checkBoxConcluido.isSelected());;
+        tarefa.setConcluida(checkBoxConcluido.isSelected());
+
+        // Converte a data selecionada, se houver; caso contrário, utiliza a data atual
         Date dataSelecionada = dateChooserDataCriacao.getDate();
-        LocalDate dataCriacao = dataSelecionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        tarefa.setDataCriacao(dataCriacao);
+        if (dataSelecionada != null) {
+            LocalDate dataCriacao = dataSelecionada.toInstant()
+                                    .atZone(ZoneId.systemDefault())
+                                    .toLocalDate();
+            tarefa.setDataCriacao(dataCriacao);
+        } else {
+            // Opcional: definir uma data padrão ou avisar o usuário
+            tarefa.setDataCriacao(LocalDate.now());
+        }
+
         tarefa.setId(id);
         String mensagem;
-
         TarefaRepository tarefaRepository = new TarefaRepository();
         boolean retornoBanco = false;
-        if (Integer.parseInt(txtId.getText()) == 0) {
 
-            retornoBanco =  tarefaRepository.inserir((Connection) janelaPrincipal.conexaoMySQL.conexao, tarefa);
+        if (id == 0) {
+            retornoBanco = tarefaRepository.inserir((Connection) janelaPrincipal.conexaoMySQL.connection, tarefa);
             mensagem = "Tarefa inserida com sucesso!";
         } else {
-            retornoBanco =  tarefaRepository.atualizar((Connection) janelaPrincipal.conexaoMySQL.conexao, tarefa);
+            retornoBanco = tarefaRepository.atualizar((Connection) janelaPrincipal.conexaoMySQL.connection, tarefa);
             mensagem = "Tarefa atualizada com sucesso!";
         }
 
@@ -222,17 +247,103 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnIrParaMenuActionPerformed
 
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
-        // TODO add your handling code here:
+        // Limpa os campos da janela
+        limparJanela();
+
+        TarefaRepository tarefaRepository = new TarefaRepository();
+        int currentId = Integer.parseInt(txtId.getText());
+        Tarefa tarefa = tarefaRepository.selecionar(ConexaoMySQL.connection, "<", currentId);
+
+        // Verifica se a tarefa retornada é válida (supondo que um id 0 indica registro não encontrado)
+        if (tarefa != null && tarefa.getId() != 0) {
+           // Utiliza os getters corretos da classe Tarefa
+           txtNomeDaTarefa.setText(tarefa.getNomeTarefa());
+           txtDescricao.setText(tarefa.getDescricao());
+           checkBoxConcluido.setSelected(tarefa.isConcluida());
+
+           // Converte LocalDate para java.util.Date para o dateChooser
+           java.util.Date dataCriacao = java.util.Date.from(
+                   tarefa.getDataCriacao().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant());
+           dateChooserDataCriacao.setDate(dataCriacao);
+
+           txtId.setText(String.valueOf(tarefa.getId()));
+        } else {
+           // Se não houver tarefa anterior, limpa os campos e define o id como 0
+           limparJanela();
+           txtId.setText("0");
+        }
     }//GEN-LAST:event_btnRetrocederActionPerformed
 
+    private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
+        // Limpa os campos da janela
+        limparJanela();
+
+        TarefaRepository tarefaRepository = new TarefaRepository();
+        int currentId = Integer.parseInt(txtId.getText());
+
+        // Utiliza o operador ">" para buscar a tarefa com id maior que o atual
+        Tarefa tarefa = tarefaRepository.selecionar(ConexaoMySQL.connection, ">", currentId);
+
+        // Verifica se a tarefa retornada é válida (supondo que um id 0 indica registro não encontrado)
+        if (tarefa != null && tarefa.getId() != 0) {
+           // Preenche os campos com os dados da tarefa obtida
+           txtNomeDaTarefa.setText(tarefa.getNomeTarefa());
+           txtDescricao.setText(tarefa.getDescricao());
+           checkBoxConcluido.setSelected(tarefa.isConcluida());
+
+           // Converte o LocalDate (data de criação) para java.util.Date e define no dateChooser
+           java.util.Date dataCriacao = java.util.Date.from(
+                   tarefa.getDataCriacao().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant());
+           dateChooserDataCriacao.setDate(dataCriacao);
+
+           txtId.setText(String.valueOf(tarefa.getId()));
+        } else {
+           // Caso não haja tarefa com id maior, limpa os campos e define o id como 0
+           limparJanela();
+           txtId.setText("0");
+        }
+    }//GEN-LAST:event_btnAvancarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (Integer.parseInt(txtId.getText()) > 0) {
+            int resposta = JOptionPane.showConfirmDialog(
+                    this,
+                    "Deseja realmente excluir esse registro?",
+                    "Excluir",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (resposta == JOptionPane.YES_OPTION) {
+                int id = Integer.parseInt(txtId.getText());
+                Tarefa tarefa = new Tarefa();
+                tarefa.setId(id);
+                TarefaRepository tarefaRepository = new TarefaRepository();
+                boolean retornoBanco = tarefaRepository.deletar(
+                    ConexaoMySQL.connection,
+                    tarefa
+                );
+                if (retornoBanco) {
+                    limparJanela();
+                    txtId.setText("0");
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Registro excluído com sucesso!",
+                            "Tela de cadastro",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+            }
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
     
-private void limparJanela() {
-    txtNomeDaTarefa.setText("");
-    txtDescricao.setText("");
-    checkBoxConcluido.setSelected(false); // Desmarca a checkbox
-    dateChooserDataCriacao.setDate(null);
-    txtNomeDaTarefa.requestFocus(); // Move o cursor para o campo de nome da tarefa
-}
+    private void limparJanela() {
+        txtNomeDaTarefa.setText("");
+        txtDescricao.setText("");
+        checkBoxConcluido.setSelected(false); // Desmarca a checkbox
+        dateChooserDataCriacao.setDate(null);
+        txtNomeDaTarefa.requestFocus(); // Move o cursor para o campo de nome da tarefa
+    }
     
     private void fecharJanela(){
         instancia = null;

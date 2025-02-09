@@ -50,10 +50,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="txtId" alignment="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="btnRetroceder" min="-2" pref="26" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="txtId" min="-2" pref="26" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnRetroceder" min="-2" pref="61" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -63,6 +68,7 @@
                               <Component id="taskName3" min="-2" pref="98" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="checkBoxConcluido" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -83,9 +89,10 @@
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnAvancar" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="btnAvancar" pref="56" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
@@ -94,10 +101,9 @@
                       <Component id="btnExcluir" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnIrParaMenu" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -113,8 +119,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="taskName1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtDescricao" alignment="3" min="-2" pref="77" max="-2" attributes="0"/>
-                  <Component id="btnRetroceder" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnAvancar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRetroceder" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="btnAvancar" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -148,7 +154,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnRetroceder">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x23ea;"/>
+        <Property name="text" type="java.lang.String" value="&#x2b05;&#xfe0f;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRetrocederActionPerformed"/>
@@ -163,8 +169,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAvancar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x23e9;"/>
+        <Property name="text" type="java.lang.String" value="&#x27a1;&#xfe0f;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAvancarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="taskName3">
       <Properties>
@@ -184,6 +193,9 @@
     <Component class="com.toedter.calendar.JDateChooser" name="dateChooserDataCriacao">
     </Component>
     <Component class="javax.swing.JTextField" name="txtId">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnGravar">
       <Properties>
@@ -197,6 +209,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Excluir"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnIrParaMenu">
       <Properties>
