@@ -135,6 +135,25 @@ public class TarefaRepository implements Crud<Tarefa>{
             return null;
         } 
     }
+    
+    // Método para contar o número de tarefas concluídas ou pendentes
+    public int contarTarefasPorStatus(Connection connection, String status) {
+        int quantidade = 0;
+        String query = "SELECT COUNT(*) FROM nova_tarefa WHERE status = ?";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, status);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                quantidade = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao contar tarefas: " + e.getMessage());
+        }
+        
+        return quantidade;
+    }
 
     @Override
     public List<Tarefa> listar(Connection connection) {

@@ -14,6 +14,7 @@ import repository.ConexaoMySQL;
 import static repository.ConexaoMySQL.connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import repository.TarefaRepository;
 
 /**
  *
@@ -93,7 +94,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         desktopPaneLayout.setHorizontalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(desktopPaneLayout.createSequentialGroup()
-                .addGroup(desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(desktopPaneLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(newTask)
@@ -105,9 +106,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                             .addComponent(undoneTasks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(doneTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField1)
+                            .addComponent(jTextField2))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(scrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -164,6 +165,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         );
         conexaoMySQL = new ConexaoMySQL(conexao);
         conexaoMySQL.conectar();
+        atualizarContadores();
     }
     
     public int getQuantidadeTarefasConcluidas() {
@@ -266,18 +268,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             }
         });
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton close;
-    private javax.swing.JDesktopPane desktopPane;
-    private java.awt.Label doneTasks;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JButton newTask;
-    private javax.swing.JScrollPane scrollPanel;
-    private java.awt.Label undoneTasks;
-    // End of variables declaration//GEN-END:variables
-
+    
+    
     private static class txtTarefasConcluidas {
 
         private static void setText(String valueOf) {
@@ -297,4 +289,28 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         public txtTarefasPendentes() {
         }
     }
+    
+    public void atualizarContadores() {
+        TarefaRepository tarefaRepository = new TarefaRepository();
+
+        // Utilize a conexão que foi inicializada na sua instancia de ConexaoMySQL
+        int totalConcluidas = tarefaRepository.contarTarefasPorStatus(conexaoMySQL.connection, "Concluída");
+        int totalPendentes = tarefaRepository.contarTarefasPorStatus(conexaoMySQL.connection, "Pendente");
+
+        // Atualiza os JTextField com os valores obtidos
+        jTextField1.setText(String.valueOf(totalConcluidas));
+        jTextField2.setText(String.valueOf(totalPendentes));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton close;
+    private javax.swing.JDesktopPane desktopPane;
+    private java.awt.Label doneTasks;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton newTask;
+    private javax.swing.JScrollPane scrollPanel;
+    private java.awt.Label undoneTasks;
+    // End of variables declaration//GEN-END:variables
+
 }

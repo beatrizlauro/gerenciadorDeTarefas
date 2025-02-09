@@ -14,6 +14,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
     private static JanelaNovaTarefa instancia;
     private JanelaPrincipal janelaPrincipal;
 
+
     /**
      * Creates new form JanelaNovaTarefa
      */
@@ -195,7 +196,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkBoxConcluidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxConcluidoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_checkBoxConcluidoActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
@@ -213,6 +214,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
                                     .atZone(ZoneId.systemDefault())
                                     .toLocalDate();
             tarefa.setDataCriacao(dataCriacao);
+            janelaPrincipal.atualizarContadores();
         } else {
             // Opcional: definir uma data padrão ou avisar o usuário
             tarefa.setDataCriacao(LocalDate.now());
@@ -226,9 +228,12 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
         if (id == 0) {
             retornoBanco = tarefaRepository.inserir((Connection) janelaPrincipal.conexaoMySQL.connection, tarefa);
             mensagem = "Tarefa inserida com sucesso!";
+            janelaPrincipal.atualizarContadores();
         } else {
             retornoBanco = tarefaRepository.atualizar((Connection) janelaPrincipal.conexaoMySQL.connection, tarefa);
             mensagem = "Tarefa atualizada com sucesso!";
+            janelaPrincipal.atualizarContadores();
+            
         }
 
         if(retornoBanco) {
@@ -267,6 +272,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
            dateChooserDataCriacao.setDate(dataCriacao);
 
            txtId.setText(String.valueOf(tarefa.getId()));
+           janelaPrincipal.atualizarContadores();
         } else {
            // Se não houver tarefa anterior, limpa os campos e define o id como 0
            limparJanela();
@@ -297,6 +303,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
            dateChooserDataCriacao.setDate(dataCriacao);
 
            txtId.setText(String.valueOf(tarefa.getId()));
+           janelaPrincipal.atualizarContadores();
         } else {
            // Caso não haja tarefa com id maior, limpa os campos e define o id como 0
            limparJanela();
@@ -331,11 +338,11 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
                             "Tela de cadastro",
                             JOptionPane.INFORMATION_MESSAGE
                     );
+                    janelaPrincipal.atualizarContadores();
                 }
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
-
     
     private void limparJanela() {
         txtNomeDaTarefa.setText("");
@@ -376,4 +383,5 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNomeDaTarefa;
     // End of variables declaration//GEN-END:variables
+
 }
