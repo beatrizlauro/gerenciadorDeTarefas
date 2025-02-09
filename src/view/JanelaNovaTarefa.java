@@ -14,7 +14,6 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
     private static JanelaNovaTarefa instancia;
     private JanelaPrincipal janelaPrincipal;
 
-
     /**
      * Creates new form JanelaNovaTarefa
      */
@@ -215,6 +214,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
                                     .toLocalDate();
             tarefa.setDataCriacao(dataCriacao);
             janelaPrincipal.atualizarContadores();
+            janelaPrincipal.atualizarListaTarefas();
         } else {
             // Opcional: definir uma data padrão ou avisar o usuário
             tarefa.setDataCriacao(LocalDate.now());
@@ -229,11 +229,12 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
             retornoBanco = tarefaRepository.inserir((Connection) janelaPrincipal.conexaoMySQL.connection, tarefa);
             mensagem = "Tarefa inserida com sucesso!";
             janelaPrincipal.atualizarContadores();
+            janelaPrincipal.atualizarListaTarefas();
         } else {
             retornoBanco = tarefaRepository.atualizar((Connection) janelaPrincipal.conexaoMySQL.connection, tarefa);
             mensagem = "Tarefa atualizada com sucesso!";
             janelaPrincipal.atualizarContadores();
-            
+            janelaPrincipal.atualizarListaTarefas();
         }
 
         if(retornoBanco) {
@@ -273,6 +274,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
 
            txtId.setText(String.valueOf(tarefa.getId()));
            janelaPrincipal.atualizarContadores();
+           janelaPrincipal.atualizarListaTarefas();
         } else {
            // Se não houver tarefa anterior, limpa os campos e define o id como 0
            limparJanela();
@@ -304,6 +306,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
 
            txtId.setText(String.valueOf(tarefa.getId()));
            janelaPrincipal.atualizarContadores();
+           janelaPrincipal.atualizarListaTarefas();
         } else {
            // Caso não haja tarefa com id maior, limpa os campos e define o id como 0
            limparJanela();
@@ -339,6 +342,7 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
                             JOptionPane.INFORMATION_MESSAGE
                     );
                     janelaPrincipal.atualizarContadores();
+                    janelaPrincipal.atualizarListaTarefas();
                 }
             }
         }
@@ -383,5 +387,4 @@ public class JanelaNovaTarefa extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNomeDaTarefa;
     // End of variables declaration//GEN-END:variables
-
 }

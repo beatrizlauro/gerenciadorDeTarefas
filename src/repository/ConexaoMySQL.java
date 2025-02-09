@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package repository;
 
 import java.sql.Connection;
@@ -11,10 +7,6 @@ import java.sql.Date;
 import javax.swing.JOptionPane;
 import model.Tarefa;
 
-/**
- *
- * @author User
- */
 public class ConexaoMySQL {
     public Conexao conexao = null;
     public static Connection connection = null;

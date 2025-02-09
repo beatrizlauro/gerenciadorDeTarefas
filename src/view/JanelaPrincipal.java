@@ -1,9 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JInternalFrame;
@@ -14,12 +13,10 @@ import repository.ConexaoMySQL;
 import static repository.ConexaoMySQL.connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import repository.TarefaRepository;
 
-/**
- *
- * @author User
- */
 public class JanelaPrincipal extends javax.swing.JFrame {
 
     JanelaNovaTarefa janelaNovaTarefa;
@@ -27,6 +24,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     public int ultimoId;
     private Conexao conexao;
     public ConexaoMySQL conexaoMySQL;
+    private javax.swing.JPanel panelTasks;
 
 
     /**
@@ -38,6 +36,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         desktopPane = new javax.swing.JDesktopPane();
         newTask = new javax.swing.JButton();
         close = new javax.swing.JButton();
@@ -49,7 +48,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        newTask.setText("Nova Tarefa");
+        newTask.setText("Tarefa");
         newTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newTaskActionPerformed(evt);
@@ -97,9 +96,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGroup(desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(desktopPaneLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(newTask)
-                        .addGap(18, 18, 18)
-                        .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(newTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(desktopPaneLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -137,16 +136,16 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
@@ -154,6 +153,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     public JanelaPrincipal() {
         initComponents();
+        lstTarefas = new ArrayList<>();
+        ultimoId = 0;
+        panelTasks = new JPanel();
+        panelTasks.setLayout(new BoxLayout(panelTasks, BoxLayout.Y_AXIS));
+        scrollPanel.setViewportView(panelTasks);
+        JPanel container = new JPanel(new BorderLayout());
+        container.add(panelTasks, BorderLayout.NORTH);
+        scrollPanel.setViewportView(container);
+        
         lstTarefas = new ArrayList<>();
         ultimoId = 0;
         conexao = new Conexao(
@@ -166,6 +174,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         conexaoMySQL = new ConexaoMySQL(conexao);
         conexaoMySQL.conectar();
         atualizarContadores();
+        atualizarListaTarefas();
     }
     
     public int getQuantidadeTarefasConcluidas() {
@@ -301,11 +310,36 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jTextField1.setText(String.valueOf(totalConcluidas));
         jTextField2.setText(String.valueOf(totalPendentes));
     }
+    
+    public void atualizarListaTarefas() {
+        // Cria uma instância do repositório para obter a lista de tarefas
+        TarefaRepository tarefaRepository = new TarefaRepository();
+
+        // Supondo que você já tenha implementado o método listar() que retorna uma List<Tarefa>
+        List<Tarefa> tarefas = tarefaRepository.listar(conexaoMySQL.connection);
+
+        // Limpa o container
+        panelTasks.removeAll();
+
+        // Para cada tarefa, cria um widget e adiciona ao container
+        for (Tarefa tarefa : tarefas) {
+            TaskWidget widget = new TaskWidget(tarefa);
+            widget.setPreferredSize(new Dimension(435, 85));  // Tamanho ideal que você deseja
+            widget.setMaximumSize(new Dimension(435, 85));    // Impede que o widget se expanda
+            widget.setAlignmentX(Component.LEFT_ALIGNMENT);    // Opcional: alinha à esquerda dentro do container
+            panelTasks.add(widget);
+        }
+
+        // Revalida e repinta o container para refletir as alterações
+        panelTasks.revalidate();
+        panelTasks.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton close;
     private javax.swing.JDesktopPane desktopPane;
     private java.awt.Label doneTasks;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton newTask;

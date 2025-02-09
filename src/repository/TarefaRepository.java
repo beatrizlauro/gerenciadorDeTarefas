@@ -1,21 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package repository;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Tarefa;
 
-/**
- *
- * @author User
- */
 public class TarefaRepository implements Crud<Tarefa>{
     
     //Crud - inserir
@@ -154,9 +147,25 @@ public class TarefaRepository implements Crud<Tarefa>{
         
         return quantidade;
     }
-
-    @Override
+    
     public List<Tarefa> listar(Connection connection) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Tarefa> tarefas = new ArrayList<>();
+        String sql = "SELECT * FROM nova_tarefa ORDER BY id DESC";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Tarefa tarefa = new Tarefa();
+                tarefa.setId(rs.getInt("id"));
+                tarefa.setNomeTarefa(rs.getString("nomeTarefa"));
+                tarefa.setDescricao(rs.getString("descricao"));
+                String status = rs.getString("status");
+                tarefa.setConcluida("Concluída".equalsIgnoreCase(status));
+                tarefa.setDataCriacao(rs.getDate("dataCriacao").toLocalDate());
+                tarefas.add(tarefa);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tarefas;
     }
 }
