@@ -35,3 +35,12 @@ Este projeto tem como objetivo aplicar os conceitos de **Programação Orientada
 - Tela para **criar, editar e excluir tarefas**.
 - Opção para **marcar tarefas como concluídas**.
 - Relatório com o **progresso das atividades**.
+
+---
+
+## Dependências
+### JCalendar
+Utilizei a biblioteca JCalendar na aplicação para facilitar a seleção de datas na interface da **JanelaNovaTarefa**.
+Essa biblioteca oferece um componente de calendário intuitivo e personalizável, permitindo que os usuários escolham datas com facilidade, melhorando a experiência de uso na tela de cadastro de tarefas.
+
+   > Para adicionar o JCalendar ao projeto, foi incluído o arquivo JAR na pasta *jcalendar-1.4* e adicionado à Palette do NetBeans.
